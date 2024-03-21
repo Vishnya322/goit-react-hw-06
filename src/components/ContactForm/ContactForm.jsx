@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useId } from 'react';
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
@@ -19,7 +20,9 @@ const initialValues = {
   number: '',
 };
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  // const contacts = useSelector(state => state.contacts.items);
   const nameFieldId = useId();
   const numberFieldId = useId();
 
@@ -29,22 +32,21 @@ const ContactForm = ({ onAdd }) => {
       validationSchema={ContactSchema}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         try {
-          // Set submitting state to true to show loading feedback
           setSubmitting(true);
 
-          // Add contact
-          onAdd({
-            id: nanoid(),
-            name: values.name,
-            number: values.number,
+          dispatch({
+            type: 'contacts/addContact',
+            payload: {
+              id: nanoid(),
+              name: values.name,
+              number: values.number,
+            },
           });
 
-          // Reset the form after successful submission
           resetForm();
         } catch (error) {
           console.error('Error submitting form:', error);
         } finally {
-          // Set submitting state back to false after form submission
           setSubmitting(false);
         }
       }}

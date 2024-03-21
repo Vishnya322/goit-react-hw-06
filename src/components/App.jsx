@@ -7,10 +7,10 @@ import { useState, useEffect } from 'react';
 
 const App = () => {
   const [contacts, setContacts] = useState(() => {
-    const savedContacts = localStorage.getItem('saved-contacts');
-    if (savedContacts && savedContacts !== '[]') {
-      return JSON.parse(savedContacts);
-    }
+    // const savedContacts = localStorage.getItem('saved-contacts');
+    // if (savedContacts && savedContacts !== '[]') {
+    //   return JSON.parse(savedContacts);
+    // }
     return initialContacts;
   });
 

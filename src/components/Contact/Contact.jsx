@@ -1,8 +1,15 @@
 import css from './Contact.module.css';
 import { ImUser } from 'react-icons/im';
 import { ImPhone } from 'react-icons/im';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
 
-const Contact = ({ data: { id, name, number }, onDelete }) => {
+const Contact = ({ data: { id, name, number } }) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    // Відправляємо екшен для видалення контакту з відповідним id
+    dispatch(deleteContact(id));
+  };
   return (
     <div className={css.cardContainer}>
       <div className={css.cardBox}>
@@ -15,7 +22,7 @@ const Contact = ({ data: { id, name, number }, onDelete }) => {
           <p className={css.namberClient}>{number}</p>
         </div>
       </div>
-      <button className={css.btn} onClick={() => onDelete(id)}>
+      <button className={css.btn} onClick={handleDelete}>
         Delete
       </button>
     </div>
